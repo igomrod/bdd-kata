@@ -5,3 +5,10 @@ Feature: General business rules
     When 1 day passed
     Then the item has quality 9
     And the item has sell by date today
+
+  Scenario: Item degrades by one per day
+    Given an item with quality 5 and sell by date tomorrow
+    When 1 day passed
+    Then the item has quality 4
+    And the item has sell by date today
+
