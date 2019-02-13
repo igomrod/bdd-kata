@@ -1,14 +1,12 @@
 Feature: General business rules
 
   Scenario: Item degrades by one per day
-    Given an item with quality 10 and sell by date tomorrow
+    Given the following items
+      | name  | quality | sellIn   |
+      | item1 | 10      | tomorrow |
+      | item2 | 5       | tomorrow |
+      | item3 | 3       | tomorrow |
     When 1 day passed
-    Then the item has quality 9
-    And the item has sell by date today
-
-  Scenario: Item degrades by one per day
-    Given an item with quality 5 and sell by date tomorrow
-    When 1 day passed
-    Then the item has quality 4
-    And the item has sell by date today
-
+    Then item1 has quality 9 and sell by date today
+    And item2 has quality 4 and sell by date today
+    And item3 has quality 2 and sell by date today
