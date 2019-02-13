@@ -10,7 +10,9 @@ import io.cucumber.datatable.DataTableType;
 
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class Stepdefs {
     private static final String SOME_NAME = "some name";
@@ -60,7 +62,25 @@ public class Stepdefs {
 
 
         assertEquals(quality, currentItem.getQuality());
-        assertEquals(parseRelativeDay(relativeDay), currentItem.getSellIn());
+        assertEquals(relativeDay, sellInToRelativeDay(currentItem.getSellIn()));
+    }
+
+    @Then("updated state is")
+    public void updated_state_is(List<Item> items) {
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+
+        items.forEach(
+                item -> item_has_quality_and_sell_by_date_today(item.getName(),
+                                                                item.getQuality(),
+                                                                sellInToRelativeDay(item.getSellIn()))
+        );
+
     }
 
     private int parseRelativeDay(String relativeDay) {
@@ -74,6 +94,19 @@ public class Stepdefs {
             return 1;
         }
         throw new IllegalArgumentException(relativeDay + " is not understood.");
+    }
+
+    private String sellInToRelativeDay(int sellIn) {
+        if (sellIn == -1) {
+            return "yesterday";
+        }
+        if (sellIn == 0) {
+            return "today";
+        }
+        if (sellIn == 1) {
+            return "tomorrow";
+        }
+        throw new IllegalArgumentException(sellIn + " is not understood.");
     }
 
 }

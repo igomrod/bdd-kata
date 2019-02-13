@@ -1,6 +1,7 @@
 package org.gradiant.bddkata;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Inventory {
 
@@ -22,5 +23,11 @@ public class Inventory {
 
     public void addItem(Item item) {
         items.add(item);
+    }
+
+    public Optional<Item> getItemByName(String name) {
+        return items.stream()
+                .filter(item -> item.getName().equals(name))
+                .findFirst();
     }
 }
