@@ -1,18 +1,14 @@
-package se.crisp.edu.refactor.gildedrose.step;
+package org.gradiant.bddkata;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import se.crisp.edu.refactor.gildedrose.GildedRose;
-import se.crisp.edu.refactor.gildedrose.Inventory;
-import se.crisp.edu.refactor.gildedrose.Item;
 
 import static org.junit.Assert.assertEquals;
 
-public class GeneralSteps {
-
+public class Stepdefs {
     private static final String SOME_NAME = "some name";
     private GildedRose gildedRose;
     private Inventory inventory;
@@ -39,12 +35,12 @@ public class GeneralSteps {
 
     @Then("^the item has quality (\\d+)$")
     public void theItemHasQuality(int quality) throws Throwable {
-        assertEquals(quality, currentItem.quality);
+        assertEquals(quality, currentItem.getQuality());
     }
 
     @And("^the item has sell by date (.*)")
     public void theItemHasSellByDate(String relativeDay) throws Throwable {
-        assertEquals(parseRelativeDay(relativeDay), currentItem.sellIn);
+        assertEquals(parseRelativeDay(relativeDay), currentItem.getSellIn());
     }
 
 
@@ -62,4 +58,3 @@ public class GeneralSteps {
     }
 
 }
-

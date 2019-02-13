@@ -1,4 +1,4 @@
-package se.crisp.edu.refactor.gildedrose;
+package org.gradiant.bddkata;
 
 import java.util.List;
 
