@@ -1,25 +1,20 @@
 Feature: General business rules
 
   Scenario: Item degrades by one per day
-    Given the following items
-      | name  | quality | sellIn   |
-      | item1 | 10      | tomorrow |
-      | item2 | 5       | tomorrow |
-      | item3 | 3       | tomorrow |
+    Given an item with quality 10 and sell by date tomorrow
     When 1 day passed
-    Then item1 has quality 9 and sell by date today
-    And item2 has quality 4 and sell by date today
-    And item3 has quality 2 and sell by date today
+    Then the item has quality 9
+    And the item has sell by date today
 
-  Scenario: Item degrades by one per day
-    Given the following items
-      | name  | quality | sellIn   |
-      | item1 | 10      | tomorrow |
-      | item2 | 5       | tomorrow |
-      | item3 | 3       | tomorrow |
+  Scenario: Once the sell by date has passed, Quality degrades twice as fast
+    Given an item with quality 10 and sell by date today
     When 1 day passed
-    Then updated state is
-      | name  | quality | sellIn   |
-      | item1 | 9       | today    |
-      | item2 | 4       | today    |
-      | item3 | 2       | today    |
+    Then the item has quality 8
+    And the item has sell by date yesterday
+
+  Scenario: The Quality of an item is never negative
+    Given an item with quality 1 and sell by date tomorrow
+    When 1 day passed
+    And 1 day passed
+    Then the item has quality 0
+    And the item has sell by date yesterday
